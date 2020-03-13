@@ -20,10 +20,11 @@ type mysqlSetting struct {
 }
 
 var commands = map[string](func([]string) *checkers.Checker){
-	"replication": checkReplication,
-	"connection":  checkConnection,
-	"uptime":      checkUptime,
-	"readonly":    checkReadOnly,
+	"replication":       checkReplication,
+	"connection":        checkConnection,
+	"uptime":            checkUptime,
+	"readonly":          checkReadOnly,
+	"group-replication": checkGroupReplication,
 }
 
 func separateSub(argv []string) (string, []string) {

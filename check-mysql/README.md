@@ -47,6 +47,7 @@ command = ["check-mysql", "connection", "--host", "127.0.0.1", "--port", "3306",
   readonly
   replication
   connection
+  group-replication
 ```
 
 ### Options
@@ -102,6 +103,21 @@ Checks the number of MySQL connections.
   -P, --password= Password [$MYSQL_PASSWORD]
   -c, --critical= critical if the number of connection is over (default: 250)
   -w, --warning=  warning if the number of connection is over (default: 200)
+```
+
+#### `group-replication` subcommand
+
+Checks the status of MySQL Group Replication.
+
+```
+  -H, --host=           Hostname (default: localhost)
+  -p, --port=           Port (default: 3306)
+  -S, --socket=         Path to unix socket
+  -u, --user=           Username (default: root)
+  -P, --password=       Password [$MYSQL_PASSWORD]
+      --local-hostname= Local hostname as a group member. See performance_schema.replication_group_members.
+      --local-port=     Local port number as a group member. See performance_schema.replication_group_members. (default: 3306)
+  -g, --group-members   Detect anomalies of other group members
 ```
 
 ## For more information
