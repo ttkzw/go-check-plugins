@@ -12,7 +12,7 @@ import (
 
 type groupReplicationOpts struct {
 	mysqlSetting
-	LocalHostname string `long:"local-hostname" description:"Local hostname as a group member. See performance_schema.replication_group_members."`
+	LocalHostname string `long:"local-hostname" description:"Local hostname as a group member. See performance_schema.replication_group_members. (default: kernel's hostname)"`
 	LocalPort     string `long:"local-port" default:"3306" description:"Local port number as a group member. See performance_schema.replication_group_members."`
 	GroupMember   bool   `short:"g" long:"group-members" description:"Detect anomalies of other group members"`
 }
@@ -98,6 +98,15 @@ func checkGroupReplication(args []string) *checkers.Checker {
 	if err != nil {
 		os.Exit(1)
 	}
+
+	if opts.LocalHostname == "" {
+		hostname, err := os.Hostname()
+		if err != nil {
+			return checkers.Unknown("couldn't get the hostname reported by the kernel")
+		}
+		opts.LocalHostname = hostname
+	}
+
 	db := newMySQL(opts.mysqlSetting)
 	err = db.Connect()
 	if err != nil {
